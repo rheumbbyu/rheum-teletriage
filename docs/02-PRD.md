@@ -42,4 +42,4 @@ Teleconsult bookings in Philippine rheumatology clinics are accepted without a c
 | Real patient data entered | Banner; no storage; no photo upload; Data Privacy Act of 2012 |
 | Secrets or prompt injection | API key in server env vars only; notes fenced as data; length caps |
 
-**Stack:** Next.js + Tailwind, Claude via Vercel AI SDK, Zod, Vitest, GitHub Actions, Vercel.
+**Stack:** Next.js + Tailwind, Claude via the Anthropic TypeScript SDK, Zod, Vitest, GitHub Actions, Vercel.

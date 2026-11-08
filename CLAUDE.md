@@ -11,7 +11,7 @@ Pre-booking screen for Philippine rheumatology teleconsults. Staff answer 10 que
 - `mockup/index.html`: clickable layout mockup
 
 ## Stack
-Next.js (App Router) + TypeScript + Tailwind · Zod · Claude via Vercel AI SDK · Vitest · GitHub Actions · Vercel
+Next.js (App Router) + TypeScript + Tailwind · Zod · Claude via the Anthropic TypeScript SDK (`@anthropic-ai/sdk`) · Vitest · GitHub Actions · Vercel
 
 ## Commands
 ```bash

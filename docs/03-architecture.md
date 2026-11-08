@@ -44,7 +44,7 @@ flowchart LR
 | Framework | Next.js (App Router) | Builds the screen and a hidden server so that the API key stays secret (spec §9) |
 | Styling | Tailwind | Makes a clean and usable UI screen quickly. |
 | Validation | Zod | Checks all input on browser and server using one schema (spec §9) |
-| AI | Claude via Vercel AI SDK | Returns the rationale as checked JSON (spec §5); swap model if cost is an issue  |
+| AI | Claude via the Anthropic TypeScript SDK | Structured output checked against a Zod schema, so the rationale always has the shape in spec §5; model set in one place |
 | Tests | Vitest | Runs unit tests that cover every rule and rule precedence, T1-T13 (AC3.5) |
 | CI | GitHub Actions | Automatically runs all checks and tests every time code is sent to GitHub, so that a broken rule is caught before it goes live |
 | Hosting | Vercel | Gives a live URL; stores ANTHROPIC_API_KEY as a server secret, never in code (spec §9)|
@@ -234,7 +234,7 @@ type RationaleRequest = {
 | Notes over 2,000 characters | Rejected before calling Claude (AC4.5) |
 | Request fails the Zod check | Rejected before calling Claude |
 | Too many requests from one place | "Try again later" |
-| Claude is slow (over 20 seconds) or down | "rationale unavailable" |
+| Claude is slow (over 45 seconds) or down | "rationale unavailable" |
 | Claude's answer fails the Zod check | "rationale unavailable" (AC4.4) |
 
 ### How the prompt is built
@@ -249,7 +249,7 @@ type RationaleRequest = {
 3. Any citation not in the supplied excerpts is removed (AC4.3).
 4. The outcome on the card is never changed (AC4.1).
 
-**Model:** a current Claude model (e.g. `claude-sonnet-5-5`), set in one place so it can be changed. **Timeout:** 20 seconds.
+**Model:** `claude-opus-5-5` at medium effort, set in `lib/ai/rationale.ts`. If Claude's safety filter declines a request, the API retries once on Anthropic's recommended fallback model (`fallbacks: "default"`). **Timeout:** 45 seconds, one retry.
 
 ## 9. Security and privacy
 

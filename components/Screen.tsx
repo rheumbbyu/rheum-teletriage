@@ -2,11 +2,13 @@
 
 import { useState } from "react"
 import { DecisionCard, OUTCOME_STYLE, type Review } from "./DecisionCard"
+import { RationalePanel } from "./RationalePanel"
 import { Segmented } from "./Segmented"
 import { CHECKLIST, PHOTO_ITEMS, QUESTIONS } from "@/lib/questions"
 import { evaluate, PRIORITY } from "@/lib/rules/evaluate"
 import { SAMPLES } from "@/lib/samples"
 import { answersSchema, checklistSchema, photoRatingsSchema } from "@/lib/schema"
+import type { RationaleRequest } from "@/lib/ai/rationale"
 import type { Answer, Answers, Checklist, Decision, Outcome, PhotoRating, PhotoRatings, Role } from "@/lib/types"
 
 const ANSWER_OPTIONS = ["yes", "no", "unknown"] as const
@@ -39,6 +41,7 @@ export function Screen() {
   const [ratings, setRatings] = useState<Partial<PhotoRatings>>({})
   const [errors, setErrors] = useState<Partial<Record<keyof Answers, string>>>({})
   const [decision, setDecision] = useState<Decision | null>(null)
+  const [screened, setScreened] = useState<Omit<RationaleRequest, "notes"> | null>(null)
   const [review, setReview] = useState<Review>({ status: "proposal" })
   const [overrideOpen, setOverrideOpen] = useState(false)
   const [overrideOutcome, setOverrideOutcome] = useState<Outcome>("BOOK_IN_PERSON")
@@ -49,6 +52,7 @@ export function Screen() {
   // Any change makes the old card out of date.
   function clearDecision() {
     setDecision(null)
+    setScreened(null)
     setReview({ status: "proposal" })
     setOverrideOpen(false)
     setOverrideReason("")
@@ -104,16 +108,15 @@ export function Screen() {
       return
     }
     const rated = photoRatingsSchema.safeParse(ratings)
+    const input = {
+      answers: parsed.data,
+      checklist: checklistSchema.parse(checklist),
+      photoRatings: isConsultant && rated.success ? rated.data : null,
+      today: todayIso(),
+    }
     setErrors({})
-    setDecision(
-      evaluate({
-        answers: parsed.data,
-        checklist: checklistSchema.parse(checklist),
-        role,
-        photoRatings: isConsultant && rated.success ? rated.data : null,
-        today: todayIso(),
-      }),
-    )
+    setDecision(evaluate({ ...input, role }))
+    setScreened(input)
     setReview({ status: "proposal" })
   }
 
@@ -241,6 +244,7 @@ export function Screen() {
           ) : (
             <>
               <DecisionCard decision={decision} review={review} />
+              {isConsultant && screened && <RationalePanel key={JSON.stringify(screened)} request={screened} />}
 
               {isConsultant ? (
                 review.status === "proposal" && (
