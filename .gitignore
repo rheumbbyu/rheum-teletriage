@@ -42,3 +42,6 @@ next-env.d.ts
 
 # copyrighted reference PDFs and course files (kept locally only)
 guides/
+
+# local preview settings (machine-specific paths)
+.claude/launch.json
