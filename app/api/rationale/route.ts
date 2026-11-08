@@ -8,9 +8,9 @@ import { evaluate } from "@/lib/rules/evaluate"
 
 const UNAVAILABLE = { error: "rationale unavailable" }
 
-// Simple per-IP limit: 10 requests per minute. In memory, so best effort on serverless.
+// Simple per-IP limit: 5 requests per minute. In memory, so best effort on serverless.
 const WINDOW_MS = 60_000
-const LIMIT = 10
+const LIMIT = 5
 const hits = new Map<string, number[]>()
 function rateLimited(ip: string): boolean {
   const now = Date.now()

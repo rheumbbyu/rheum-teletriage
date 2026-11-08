@@ -126,7 +126,7 @@ Called only from the consultant view, after the code outcome is computed.
 ## 9. Non-functional
 - Input validation: all form input validated with Zod on client and server.
 - Secrets: `ANTHROPIC_API_KEY` in server environment variables only; never in client code or repo.
-- Abuse and cost: rate limit per IP on the AI route; notes length cap.
+- Abuse and cost: rate limit of 5 AI requests per minute per IP; notes length cap; monthly spend limit set in the Anthropic Console.
 - Privacy: banner "synthetic data only"; analytics record page views and outcome type only, never answers or notes.
 
 ## 10. Revision log

@@ -15,7 +15,7 @@ A pre-booking screen for Philippine rheumatology teleconsults. Clinic staff answ
 >
 > The screening rules reflect one fellow's reading of the guidelines and have not been reviewed by a clinical governance body.
 
-**Live demo:** _coming soon (Vercel)_
+**Live demo:** https://rheum-teletriage.vercel.app (synthetic data only)
 
 ## What it does
 
@@ -98,7 +98,7 @@ mockup/                      early clickable mockup
 - The server recomputes the decision itself, so the browser cannot send a different outcome.
 - Claude's answer is checked: only SAME or STRICTER is accepted, and citations outside the supplied excerpts are removed. If anything fails, the card shows "rationale unavailable" and the rules still apply.
 - Consultant notes are capped at 2,000 characters and passed to Claude as data, not instructions.
-- Requests to the AI route are rate-limited per IP.
+- Requests to the AI route are limited to 5 per minute per IP, and the Anthropic account has a monthly spend limit.
 - Analytics, if enabled, record page views and outcome type only.
 
 Because anything sent to the AI route leaves the clinic's control, the app is for synthetic data only (Data Privacy Act of 2012, RA 10173).
