@@ -1,6 +1,6 @@
 # Spec: RheumRoute PH (v1)
 
-> Status: v0.7, draft for review. Implements `02-PRD.md`.
+> Status: v0.8, draft for review. Implements `02-PRD.md`.
 > Citations: "APLAR Rec n" = Ahmed et al., *Int J Rheum Dis* 2022;25:247–258. "UP MIU" = UP Manila Medical Informatics Unit telemedicine guidance series, 2020.
 
 ## 1. Roles
@@ -54,7 +54,7 @@ Rules are pure functions in code. Outcomes in priority order; the highest matchi
 | 1 | **DECLINE → EMERGENCY** | R1: Q5 = yes, any red flag (UP MIU: emergencies are advised in-person care) |
 | 2 | **DECLINE → BOOK IN-PERSON** | R3: Q2 = no (APLAR Rec 2) · R4: Q3 > 12 months ago (APLAR Rec 1) · R5: Q6 = yes (APLAR Recs 3, 6) · R6: Q7 = yes (APLAR Rec 3) · R9: Q9 = no, i.e. no video or cannot show joints (UP MIU; clinic policy, stricter than APLAR Rec 5, which conditionally prefers video; UP MIU: identity cannot be verified by text, no visual cues by phone) · R15: any photo item rated `POOR` by the consultant (AC2.3; photos too poor to assess remotely) |
 | 3 | **ESCALATE TO CONSULTANT** | R2: Q1 = no (licensure depends on patient's country) · R8: Q8 = yes (recent hospitalisation or comorbidity needing hospital care; APLAR Rec 3 cites studies that excluded such patients, consultant decides) · R10: user is not consultant and any of Q1–Q8 = unknown · photos sent and not yet rated (AC2.2) |
-| 4 | **INCOMPLETE** | User is consultant and any of Q1–Q8 = unknown · R12: Q10 = no or unknown, any role (AC3.2) · R13: Q9 = unknown, any role (confirm video and virtual exam before booking) · R14: Q4 = no, any role (confirm patient identity before booking; UP MIU) |
+| 4 | **INCOMPLETE** | User is consultant and any of Q1–Q8 = unknown · R12: Q10 = no or unknown, any role (AC3.2) · R13: Q9 = unknown, any role (confirm video and virtual exam before booking) · R14: Q4 = no, any role (confirm patient identity before booking; UP MIU) · consultant with C2 = yes and photos not yet rated (AC2.2) |
 | 5 | **ACCEPT WITH CONDITIONS** | No rule above fired, Q10 = yes, and any of: C1 not done; C3 not done; C4 not done (APLAR Rec 9) |
 | 6 | **ACCEPT** | No rule above fired, Q10 = yes, C1, C3 and C4 done, photos adequate if sent. C5 is added to the card as "if feasible" and never blocks ACCEPT (APLAR Rec 7) |
 
@@ -139,3 +139,4 @@ Called only from the consultant view, after the code outcome is computed.
 | v0.5 | 2026-11-06 | E6 changed from GP referral to patient identity check. R14 added. AC3.3 reworded. T12 added. |
 | v0.6 | 2026-11-08 | Screening form cut from 22 items to 10 questions (Q1–Q10) plus a 5-item readiness checklist (C1–C5) by merging questions with the same outcome. R7 merged into R5, R11 into R9. R10 now covers Q1–Q8; R13 covers Q9 (video and virtual exam). C5 no longer blocks ACCEPT. Rules, ACs and tests renamed to the new IDs. |
 | v0.7 | 2026-11-08 | Poor photo quality changed from a condition to a hard stop: new rule R15 (any photo item `POOR` → BOOK IN-PERSON), matching AC2.3; T13 added. |
+| v0.8 | 2026-11-08 | Found while coding the rules: a consultant with photos sent but not rated → INCOMPLETE (rate before deciding). T6 may also list AC2.2 when photos were sent. |

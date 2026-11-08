@@ -89,7 +89,7 @@ type Decision = {
     outcome: Outcome
     firedRules: RuleHit[]
     conditions: string[]
-    eligibleUntil: string
+    eligibleUntil: string | null
 }
 
 type AiRationale = {
