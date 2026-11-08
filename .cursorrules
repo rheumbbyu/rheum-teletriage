@@ -1,0 +1,29 @@
+You are helping build RheumRoute PH, a pre-booking screen for Philippine rheumatology teleconsults.
+Synthetic or de-identified data only. Not for clinical use.
+
+Source of truth: docs/spec.md (Q1–Q10, C1–C5, rules R1–R15, acceptance criteria, tests T1–T13).
+Also read: docs/02-PRD.md and docs/03-architecture.md (types in §5, rules engine in §7, AI endpoint in §8).
+
+Stack: Next.js App Router, TypeScript, Tailwind, Zod, Claude via Vercel AI SDK, Vitest, GitHub Actions, Vercel.
+
+Never break these:
+- Code decides, AI explains. The outcome comes only from lib/rules/. AI output never changes Decision.outcome.
+- AI suggestedOutcome is only "SAME" or "STRICTER".
+- A required "unknown" answer never leads to ACCEPT.
+- Every outcome is a PROPOSAL until the consultant confirms; overrides need a written reason.
+- No database, no photo upload, no logging of answers or notes.
+- ANTHROPIC_API_KEY only in app/api/rationale/route.ts via environment variables. Never in client code, tests or the repo.
+
+Code style:
+- Use the types from docs/03-architecture.md §5 exactly; do not rename fields.
+- lib/rules/ is pure: no React, no fetch, no system clock (pass today's date in).
+- One function per rule (r1, r4, ...) returning RuleHit | null; each reason includes its citation.
+- Validate input with Zod on client and server.
+- R7 and R11 are retired; do not reuse them.
+- Cards never show doses or treatment advice.
+
+Testing:
+- Every rule and test case T1–T13 has a Vitest test. Never call the real Claude API in tests.
+- Run lint, typecheck and tests before committing.
+
+If the spec and code disagree, ask before changing any clinical rule. Update docs/spec.md and its revision log first.

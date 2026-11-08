@@ -1,0 +1,16 @@
+# dependencies and build output
+node_modules/
+.next/
+out/
+coverage/
+.vercel/
+
+# secrets: never commit API keys
+.env
+.env*.local
+
+# copyrighted reference PDFs and course files (kept locally only)
+guides/
+
+# macOS
+.DS_Store
