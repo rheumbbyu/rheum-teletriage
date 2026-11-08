@@ -41,7 +41,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const client = new Anthropic({ timeout: 45_000, maxRetries: 1 })
+    const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY, timeout: 45_000, maxRetries: 1 })
     const response = await client.beta.messages.parse({
       model: MODEL,
       max_tokens: 4000,
@@ -61,7 +61,7 @@ export async function POST(request: Request) {
     return Response.json({ rationale, outcome: decision.outcome, notesWarning })
   } catch (error) {
     if (error instanceof Anthropic.RateLimitError) console.error("Claude rate limit")
-    else if (error instanceof Anthropic.APIError) console.error(`Claude API error ${error.status}`)
+    else if (error instanceof Anthropic.APIError) console.error(`Claude API error ${error.status}: ${error.message}`)
     else console.error("Rationale request failed")
     return Response.json({ ...UNAVAILABLE, outcome: decision.outcome, notesWarning }, { status: 502 })
   }

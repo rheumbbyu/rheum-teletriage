@@ -77,7 +77,7 @@ export function RationalePanel({ request }: { request: Omit<RationaleRequest, "n
               <strong>Claude suggests a stricter outcome.</strong> {result.rationale.stricterReason}
             </p>
           )}
-          <p>{result.rationale.rationale}</p>
+          <p className="whitespace-pre-line">{result.rationale.rationale}</p>
           {result.rationale.citations.length > 0 && (
             <p className="flex flex-wrap gap-1">
               {result.rationale.citations.map((c) => (
