@@ -140,7 +140,7 @@ sequenceDiagram
   R-->>UI: Decision {outcome, firedRules[], conditions[], eligibleUntil}
   UI-->>U: Decision card shown (PROPOSAL)
   alt role = consultant
-    UI->>API: answers, ratings, decision, notes (≤ 2,000 chars)
+    UI->>API: answers, ratings, notes (≤ 2,000 chars); server recalculates the decision
     API->>API: Validate with Zod, reject long notes, rate-limit by IP
     API->>C: System prompt + guideline excerpts + fenced data
     C-->>API: JSON rationale
@@ -220,7 +220,7 @@ type RationaleRequest = {
   answers: Answers
   checklist: Checklist
   photoRatings: PhotoRatings
-  decision: Decision        // already decided by the rules engine
+  today: string 
   notes: string             // consultant notes, max 2,000 characters
 }
 ```

@@ -14,7 +14,7 @@ Teleconsult bookings in Philippine rheumatology clinics are accepted without a c
 | Goal | Metric (v1 target) |
 |---|---|
 | Never accept a booking that fails a hard stop | 100% of hard-stop test cases return DECLINE |
-| Unclear cases always reach the consultant | 100% of non-consultant screens with any Unknown return ESCALATE |
+| Unclear cases always reach the consultant | 100% of non-consultant screens with any unknown in Q1–Q8 return ESCALATE |
 | AI never loosens a rule outcome | 0 test cases where AI output changes or loosens the code outcome |
 | Fast and usable | Screen completed in < 2 min; 3 of 3 test users (≥ 1 nurse or secretary) finish without help |
 | Fewer conversions (post-v1) | No published Philippine rate exists (`01-idea-validation.md` Step 3c). After v1, measure the clinic's baseline of teleconsults converted to in-person, then set a reduction target |
