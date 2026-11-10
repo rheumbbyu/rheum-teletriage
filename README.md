@@ -13,7 +13,7 @@ A pre-booking screen for Philippine rheumatology teleconsults. Clinic staff answ
 > - Do **not** use its output to make real booking, triage or treatment decisions.
 > - In an emergency, patients should go to the nearest emergency room.
 >
-> The screening rules reflect one fellow's reading of the guidelines and have not been reviewed by a clinical governance body.
+> The screening rules reflect one fellow's reading of the guidelines and have not been reviewed by a clinical governance body. Guidelines may be updated in the future
 
 **Live demo:** https://rheum-teletriage.vercel.app (synthetic data only)
 
@@ -107,9 +107,31 @@ Because anything sent to the AI route leaves the clinic's control, the app is fo
 
 - Ahmed S, et al. APLAR recommendations on the practice of telemedicine in rheumatology. *Int J Rheum Dis* 2022;25:247–258. doi:10.1111/1756-185X.14286
 - UP Manila Medical Informatics Unit. Telemedicine guidance series, 2020.
+- Guidelines can be updated in v2 (add ACR or EULAR or if APLAR updates)
 
 The excerpts in `lib/guidelines/excerpts.ts` are short paraphrases written for this project, not quotations. The source PDFs are not included in this repository.
 
+## Roadmap (v2 ideas)
+
+Not built yet. Any clinical change goes into `docs/spec.md` and its revision log first.
+
+**Guidelines and AI**
+- Add more guideline summaries Claude may cite (e.g. ACR, EULAR, Philippine Rheumatology Association, DOH), keeping the rule that Claude cites only the supplied excerpts.
+- Shorten the Claude rationale; it currently runs past the 120-word target.
+
+**Access and equity**
+- Assisted video: the patient joins from a barangay health center or rural health unit, with a health worker to help with the exam (APLAR Rec 7).
+- Service-disruption mode for typhoons and floods: allow a scheduled interim teleconsult for stable patients, booking in-person when services resume (APLAR Rec 4).
+- Filipino version of the screen.
+
+**Clinical rules**
+- Review the red-flag list with a second rheumatologist (e.g. visual symptoms, hot swollen joint, breathlessness).
+- Hint at Q3 to check the last in-person date in the EMR, since the 12-month rule depends on it.
+
+**Engineering**
+- Make Vercel publish only after CI passes.
+- Override log, reviewed periodically to improve the rules. This needs storage, so it also needs privacy work.
+
 ## Author
 
-Lisa Traboco, rheumatology fellow. Built with help from Claude Code.
+Lisa Traboco, rheumatology consultant. Health Informatics Specialist. Built for class on Gen/Agentic AI with help from Claude Code.
