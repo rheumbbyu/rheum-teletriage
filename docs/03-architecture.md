@@ -140,11 +140,11 @@ sequenceDiagram
   R-->>UI: Decision {outcome, firedRules[], conditions[], eligibleUntil}
   UI-->>U: Decision card shown (PROPOSAL)
   alt role = consultant
-    UI->>API: answers, ratings, notes (≤ 2,000 chars); server recalculates the decision
+    UI->>API: answers, ratings, notes (≤ 2,000 chars), server recalculates the decision
     API->>API: Validate with Zod, reject long notes, rate-limit by IP
     API->>C: System prompt + guideline excerpts + fenced data
     C-->>API: JSON rationale
-    API->>API: Zod-validate; drop unknown citations; suggestedOutcome must be SAME or STRICTER
+    API->>API: Zod-validate, drop unknown citations, suggestedOutcome must be SAME or STRICTER
     API-->>UI: AiRationale, or "rationale unavailable"
     UI-->>U: Rationale shown under the code outcome
   end
