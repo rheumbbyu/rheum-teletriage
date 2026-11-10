@@ -96,7 +96,7 @@ mockup/                      early clickable mockup
 
 - The API key lives only in server environment variables, never in the browser or the repository.
 - The server recomputes the decision itself, so the browser cannot send a different outcome.
-- Claude's answer is checked: only SAME or STRICTER is accepted, and citations outside the supplied excerpts are removed. If anything fails, the card shows "rationale unavailable" and the rules still apply.
+- Claude's answer is checked: only SAME or STRICTER is accepted, and citations outside the supplied excerpts are removed. If anything fails, the card shows "rationale unavailable" and the rules still apply. It is better to err on the side of caution even though this is only a class experiment. 
 - Consultant notes are capped at 2,000 characters and passed to Claude as data, not instructions.
 - Requests to the AI route are limited to 5 per minute per IP, and the Anthropic account has a monthly spend limit.
 - Analytics, if enabled, record page views and outcome type only.
@@ -105,8 +105,8 @@ Because anything sent to the AI route leaves the clinic's control, the app is fo
 
 ## Guideline sources
 
-- Ahmed S, et al. APLAR recommendations on the practice of telemedicine in rheumatology. *Int J Rheum Dis* 2022;25:247–258. doi:10.1111/1756-185X.14286
-- UP Manila Medical Informatics Unit. Telemedicine guidance series, 2020.
+- Ahmed S, et al. APLAR recommendations on the practice of telemedicine in rheumatology. *Int J Rheum Dis* 2022;25:247–258. doi:10.1111/1756-185X.14286 (I am a co-author of these guidelines)
+- UP Manila Medical Informatics Unit. Telemedicine guidance series, 2020. (I am a co-author of these guidelines)
 - Guidelines can be updated in v2 (add ACR or EULAR or if APLAR updates)
 
 The excerpts in `lib/guidelines/excerpts.ts` are short paraphrases written for this project, not quotations. The source PDFs are not included in this repository.
@@ -116,7 +116,7 @@ The excerpts in `lib/guidelines/excerpts.ts` are short paraphrases written for t
 Not built yet. Any clinical change goes into `docs/spec.md` and its revision log first.
 
 **Guidelines and AI**
-- Add more guideline summaries Claude may cite (e.g. ACR, EULAR, Philippine Rheumatology Association, DOH), keeping the rule that Claude cites only the supplied excerpts.
+- Add more guideline summaries Claude may cite (e.g. ACR, EULAR, Philippine Rheumatology Association, DOH), keeping the rule that Claude cites only the supplied excerpts. The consultant still has the final say for accountability, since AI cannot be held responsible for actual medical decisions. 
 - Shorten the Claude rationale; it currently runs past the 120-word target.
 
 **Access and equity**
@@ -130,7 +130,7 @@ Not built yet. Any clinical change goes into `docs/spec.md` and its revision log
 
 **Engineering**
 - Make Vercel publish only after CI passes.
-- Override log, reviewed periodically to improve the rules. This needs storage, so it also needs privacy work.
+- Override log, reviewed periodically to improve the rules and for clinical discussion, not necessarily to validate the app. This needs storage, so it also needs privacy work.
 
 ## Author
 
